@@ -32,7 +32,8 @@ function App() {
       <button onClick={() => setValue((prevValue) => prevValue + 1)}>+1</button>
       <h1>Render Count: {count.current}</h1> */}
 
-      {/* Second useCase  */}
+      {/* Second useCase 
+      We can also use the useRef to select the html element using the ref attribute  */}
       <>
         <input type="text" ref={inputElement} />
         <button onClick={btnClicked}>Click Here</button>
