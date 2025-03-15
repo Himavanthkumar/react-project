@@ -1,43 +1,42 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useState, useEffect, useRef } from "react";
+
 import "./App.css";
 
 function App() {
-  let count1 = 0;
-  const [count, setCount] = useState(0);
-  function handleClick() {
-    count1 = count1 + 1;
-    console.log(count1);
-  }
+  // // First use case of useRef
+
+  // const [value, setValue] = useState(0);
+  // //The below code causes an infinite loop , we can solve this using the useRef
+  // // const [count, setCount] = useState(0);
+  // // useEffect(() => {
+  // //   setCount((prevCount) => prevCount + 1);
+  // // });
+  // const count = useRef(0);
+  // useEffect(() => {
+  //   // useRef provides a object that has a propert named current that sotres the value we have given
+  //   count.current = count.current + 1;
+  // });
+
+  //Second useCase
+  const inputElement = useRef();
+  const btnClicked = () => {
+    console.log(inputElement.current);
+    inputElement.current.style.background = "blue";
+  };
 
   return (
     <>
-      <h1>Without useState, I am not updated {count1}</h1>
-      <button onClick={handleClick}>Click me!</button>
-      <h1>With useState, I am updated {count}</h1>
-      <button onClick={() => setCount(count + 1)}>Click me!</button>
-      {/* best practice is to use setCount((count) => count + 1)
-      Java script uses batching under the hood so if we use the 
-      setCount(count + 1)
-      setCount(count + 1)
-      setCount(count + 1)
-      setCount(count + 1)
+      {/* First use case of useRef 
+      <button onClick={() => setValue((prevValue) => prevValue - 1)}>-1</button>
+      <h1>{value}</h1>
+      <button onClick={() => setValue((prevValue) => prevValue + 1)}>+1</button>
+      <h1>Render Count: {count.current}</h1> */}
 
-      All the above instructions are processed at the same time so to avoid this use
-      setCount((count) => count + 1)
-      
-      */}
-      <button
-        onClick={() => {
-          setCount((count) => count + 1);
-          setCount((count) => count + 1);
-          setCount((count) => count + 1);
-          setCount((count) => count + 1);
-        }}
-      >
-        Click me to add 4!
-      </button>
+      {/* Second useCase  */}
+      <>
+        <input type="text" ref={inputElement} />
+        <button onClick={btnClicked}>Click Here</button>
+      </>
     </>
   );
 }
