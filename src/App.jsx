@@ -7,12 +7,13 @@ function App() {
   }
 
   // function empty() {}
+
+  // The useCallback hook is used to memoize the function so that it is not recreated on every render.
+  // This is useful when the function is passed as a prop to a child component, preventing unnecessary re-renders.
   const empty = useCallback(() => {}, []);
   return (
     <>
-      {/* Even though we are passing the empty function under the hood a new function is passed eveytime the component is rerendered 
-    to fix this use the hook useCallback this saves the function def in between the renders
-    */}
+      {/* The Header component is passed the memoized empty function. */}
       <Header empty={empty} />
       <h1>Count: {count}</h1>
       <button onClick={handleClick}>Click me!</button>
