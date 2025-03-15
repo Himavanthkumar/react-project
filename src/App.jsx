@@ -1,43 +1,21 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
-
+import { useCallback, useState } from "react";
+import Header from "./Header";
 function App() {
-  let count1 = 0;
   const [count, setCount] = useState(0);
   function handleClick() {
-    count1 = count1 + 1;
-    console.log(count1);
+    setCount((prevCount) => prevCount + 1);
   }
 
+  // function empty() {}
+  const empty = useCallback(() => {}, []);
   return (
     <>
-      <h1>Without useState, I am not updated {count1}</h1>
+      {/* Even though we are passing the empty function under the hood a new function is passed eveytime the component is rerendered 
+    to fix this use the hook useCallback this saves the function def in between the renders
+    */}
+      <Header empty={empty} />
+      <h1>Count: {count}</h1>
       <button onClick={handleClick}>Click me!</button>
-      <h1>With useState, I am updated {count}</h1>
-      <button onClick={() => setCount(count + 1)}>Click me!</button>
-      {/* best practice is to use setCount((count) => count + 1)
-      Java script uses batching under the hood so if we use the 
-      setCount(count + 1)
-      setCount(count + 1)
-      setCount(count + 1)
-      setCount(count + 1)
-
-      All the above instructions are processed at the same time so to avoid this use
-      setCount((count) => count + 1)
-      
-      */}
-      <button
-        onClick={() => {
-          setCount((count) => count + 1);
-          setCount((count) => count + 1);
-          setCount((count) => count + 1);
-          setCount((count) => count + 1);
-        }}
-      >
-        Click me to add 4!
-      </button>
     </>
   );
 }
