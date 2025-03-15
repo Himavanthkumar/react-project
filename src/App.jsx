@@ -1,42 +1,38 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
+import { useMemo, useState } from "react";
+
 import "./App.css";
 
 function App() {
-  let count1 = 0;
-  const [count, setCount] = useState(0);
-  function handleClick() {
-    count1 = count1 + 1;
-    console.log(count1);
+  const [number, setNumber] = useState(0);
+  const [counter, setCounter] = useState(0);
+
+  function cubeNum(num) {
+    console.log("Calculation done!");
+    return Math.pow(num, 3);
   }
+  //  const result = cubeNum(number);
+  // Saves the values given in the dependancy array between the renders and don't compute it again
+  const result = useMemo(() => {
+    return cubeNum(number);
+  }, [number]);
 
   return (
     <>
-      <h1>Without useState, I am not updated {count1}</h1>
-      <button onClick={handleClick}>Click me!</button>
-      <h1>With useState, I am updated {count}</h1>
-      <button onClick={() => setCount(count + 1)}>Click me!</button>
-      {/* best practice is to use setCount((count) => count + 1)
-      Java script uses batching under the hood so if we use the 
-      setCount(count + 1)
-      setCount(count + 1)
-      setCount(count + 1)
-      setCount(count + 1)
+      <input
+        type="number"
+        onChange={(e) => setNumber(Number(e.target.value))}
+      />
+      <h1>Cube of the number: {result}</h1>
+      <br />
 
-      All the above instructions are processed at the same time so to avoid this use
-      setCount((count) => count + 1)
-      
-      */}
+      {/* Without the useMemo hook this below code causes the page to rerender and unnecesserly calling the above code */}
+      <h1>Count is {counter}</h1>
       <button
         onClick={() => {
-          setCount((count) => count + 1);
-          setCount((count) => count + 1);
-          setCount((count) => count + 1);
-          setCount((count) => count + 1);
+          setCounter((prevCount) => prevCount + 1);
         }}
       >
-        Click me to add 4!
+        Add +1
       </button>
     </>
   );
