@@ -1,7 +1,21 @@
-import { useState } from "react";
+import React from "react";
+import useFetch from "./Hooks/useFetch";
 
-function App() {
-  return <></>;
-}
+const UsersList = () => {
+  const { data, loading, error } = useFetch(
+    "https://jsonplaceholder.typicode.com/users"
+  );
 
-export default App;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error}</p>;
+
+  return (
+    <ul>
+      {data.map((user) => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
+  );
+};
+
+export default UsersList;
